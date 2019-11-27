@@ -1,0 +1,36 @@
+# MAC OS CACHE
+.DS_Store
+
+# BINARY
+*.out
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# TEST
+*.test
+
+# ENV FOLDER
+.env
+env
+
+
+# Misc
+.idea
+src/.DS_Store
+go-pckg/*
+src/vendor/*
+coverage.out
+
+main
+vendor
+.tmp
+tmp
+
+# go sum
+go.sum
+
+# public folder for image path
+public
