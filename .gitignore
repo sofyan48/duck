@@ -34,3 +34,5 @@ go.sum
 
 # public folder for image path
 public
+
+enabled_plugins
