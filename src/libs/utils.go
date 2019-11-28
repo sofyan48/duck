@@ -8,6 +8,7 @@ import (
 )
 
 // Check Error
+// @e: error
 func Check(e error) error {
 	if e != nil {
 		panic(e)
@@ -16,6 +17,8 @@ func Check(e error) error {
 }
 
 // CheckFolder function check folder
+// @path : string
+// return error
 func CheckFolder(path string) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return err
@@ -24,6 +27,8 @@ func CheckFolder(path string) error {
 }
 
 // MakeDirs fucntion create directory
+// @path : string
+// return error
 func MakeDirs(path string) error {
 	err := os.MkdirAll(path, os.ModePerm)
 	if err != nil {
@@ -33,6 +38,8 @@ func MakeDirs(path string) error {
 }
 
 // FileRemove Remove Files
+// @path : string
+// return error
 func FileRemove(path string) error {
 	err := os.Remove(path)
 	if err != nil {
