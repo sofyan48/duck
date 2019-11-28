@@ -2,6 +2,7 @@ package configs
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/RichardKnop/machinery/v1/config"
@@ -14,8 +15,8 @@ import (
 // LoadMachineryConfig load config Function
 func LoadMachineryConfig(path string) (*config.Config, error) {
 	var sqsClient = sqs.New(session.Must(session.NewSession(&aws.Config{
-		Region:      aws.String("ap-southeast-1"),
-		Credentials: credentials.NewStaticCredentials("AKIAJT6VRYLHGO2NMU7Q", "J8ndXGNUr+FyqTnWJAmYjT3G+OaGwkAkdpgb3f6m", ""),
+		Region:      aws.String(os.Getenv("AWS_REGION")),
+		Credentials: credentials.NewStaticCredentials(os.Getenv("AWS_KEY"), os.Getenv("AWS_SECRET_KEY"), ""),
 		HTTPClient: &http.Client{
 			Timeout: time.Second * 120,
 		},
@@ -23,9 +24,9 @@ func LoadMachineryConfig(path string) (*config.Config, error) {
 
 	var visibilityTimeout = 20
 	cnf := &config.Config{
-		Broker:        "https://sqs.ap-southeast-1.amazonaws.com/025432561883",
-		DefaultQueue:  "machinery_tasks",
-		ResultBackend: "redis://localhost:6379",
+		Broker:        os.Getenv("SQS_BROKER"),
+		DefaultQueue:  os.Getenv("SQS_SCHEDULER"),
+		ResultBackend: os.Getenv("RESULT_BACKEND"),
 		SQS: &config.SQSConfig{
 			Client:            sqsClient,
 			VisibilityTimeout: &visibilityTimeout,
