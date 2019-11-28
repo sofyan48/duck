@@ -7,4 +7,5 @@ require (
 	github.com/aws/aws-sdk-go v1.25.8
 	github.com/joho/godotenv v1.3.0
 	github.com/urfave/cli v1.22.2
+	gopkg.in/yaml.v2 v2.2.7
 )

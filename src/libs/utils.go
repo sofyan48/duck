@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"gopkg.in/yaml.v2"
 )
 
 // Check Error
@@ -153,4 +154,15 @@ func GetAllEnvirontment() map[string]string {
 	myEnv, err := godotenv.Read()
 	Check(err)
 	return myEnv
+}
+
+// ReadYML read YML File
+func ReadYML(path string) (map[interface{}]interface{}, error) {
+	ymlFile := ReadFile(path, 0644)
+	data := make(map[interface{}]interface{})
+	err := yaml.Unmarshal([]byte(ymlFile), &data)
+	if Check(err) != nil {
+		return data, err
+	}
+	return data, nil
 }
