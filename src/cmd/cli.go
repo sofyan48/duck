@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/sofyan48/duck/src/libs"
 	"github.com/urfave/cli"
 )
 
@@ -35,22 +34,12 @@ func Init() *cli.App {
 	return app
 }
 
-// AppCommands mapping command
+// AppCommands All Command line app
 func AppCommands() *cli.App {
 	app := Init()
 	app.Commands = []cli.Command{
-		{
-			Name:  "worker",
-			Usage: "launch worker",
-			Action: func(c *cli.Context) error {
-				srv, err := InitServer()
-				if err != nil {
-					return err
-				}
-				libs.WorkerStart(srv)
-				return nil
-			},
-		},
+		createEnvi(),
+		workerStart(),
 	}
 	return app
 }
