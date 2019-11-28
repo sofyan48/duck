@@ -8,8 +8,8 @@ var app *cli.App
 
 // ArgsMapping object mapping
 type ArgsMapping struct {
-	ConfigPath string
-	TestArg    string
+	ConfigPath   string
+	TemplatePath string
 }
 
 // Args Glabal Acces args command
@@ -20,15 +20,14 @@ func Init() *cli.App {
 	app = cli.NewApp()
 	app.Name = "duck"
 	app.Usage = "duck scheduler task send"
-	app.Author = "meong"
+	app.Author = "meong48"
 	app.Email = "meongbego@gmail.com"
-	app.Version = "0.0.0"
+	app.Version = "0.0.1"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:        "c",
-			Value:       "",
+			Name:        "environtmen, e",
+			Usage:       "Load environtmen from `FILE`",
 			Destination: &Args.ConfigPath,
-			Usage:       "Path to a configuration file",
 		},
 	}
 	return app

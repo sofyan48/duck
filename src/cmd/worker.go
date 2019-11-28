@@ -10,8 +10,15 @@ func workerStart() cli.Command {
 	command := cli.Command{}
 	command.Name = "worker"
 	command.Usage = "worker"
+	command.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:        "yml, y",
+			Usage:       "Load YAML configuration from `FILE`",
+			Destination: &Args.TemplatePath,
+		},
+	}
 	command.Action = func(c *cli.Context) error {
-		libs.LoadEnvirontment("")
+		libs.LoadEnvirontment(Args.ConfigPath)
 		srv, err := InitServer()
 		libs.Check(err)
 		libs.WorkerStart(srv)

@@ -3,6 +3,7 @@ package libs
 import (
 	"io"
 	"os"
+	"os/user"
 
 	"github.com/joho/godotenv"
 	"gopkg.in/yaml.v2"
@@ -128,11 +129,24 @@ func CheckEnvironment(path string) (bool, error) {
 	return true, nil
 }
 
+// ReadHome function
+// return string
+func ReadHome() string {
+	usr, err := user.Current()
+	Check(err)
+	return usr.HomeDir
+}
+
 // LoadEnvirontment load environment config
 // @path : string
 func LoadEnvirontment(path string) error {
-	err := godotenv.Load()
-	// err := godotenv.Load(path)
+	if path == "" {
+		homeDir := ReadHome()
+		err := godotenv.Load(homeDir + "/.duck")
+		Check(err)
+		return err
+	}
+	err := godotenv.Load(path)
 	Check(err)
 	return err
 }
@@ -157,6 +171,7 @@ func GetAllEnvirontment() map[string]string {
 }
 
 // ReadYML read YML File
+// return map,error
 func ReadYML(path string) (map[interface{}]interface{}, error) {
 	ymlFile := ReadFile(path, 0644)
 	data := make(map[interface{}]interface{})
