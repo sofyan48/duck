@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/sofyan48/duck/src/configs"
 	"github.com/sofyan48/duck/src/libs"
 	"github.com/urfave/cli"
 )
@@ -16,11 +15,6 @@ type ArgsMapping struct {
 
 // Args Glabal Acces args command
 var Args ArgsMapping
-
-// CLIinterface obj
-type CLIinterface interface {
-	Init() *cli.App
-}
 
 // Init Initialise a CLI app
 func Init() *cli.App {
@@ -46,19 +40,14 @@ func AppCommands() *cli.App {
 	app := Init()
 	app.Commands = []cli.Command{
 		{
-			Name:  "test",
-			Usage: "launch machinery worker",
+			Name:  "worker",
+			Usage: "launch worker",
 			Action: func(c *cli.Context) error {
-				cfg, err := configs.LoadMachineryConfig(Args.ConfigPath)
+				srv, err := InitServer()
 				if err != nil {
-					return cli.NewExitError(err.Error(), 1)
+					return err
 				}
-				srv, err := libs.StartServer(cfg)
-				if err != nil {
-					return cli.NewExitError(err.Error(), 1)
-				}
-				tasks := map[string]interface{}{}
-				srv.RegisterTasks(tasks)
+				libs.WorkerStart(srv)
 				return nil
 			},
 		},
