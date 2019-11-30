@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"os"
 	"strconv"
 
 	"github.com/sofyan48/duck/src/libs"
@@ -16,7 +15,7 @@ func worker() cli.Command {
 	command.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "file, f",
-			Usage:       "Load YAML configuration from `FILE`",
+			Usage:       "Set Register Task From Yaml File",
 			Destination: &Args.TemplatePath,
 		},
 
@@ -34,13 +33,22 @@ func worker() cli.Command {
 	}
 	command.Action = func(c *cli.Context) error {
 		if c.Args()[0] == "configure" {
-			os.Exit(0)
+			return cli.NewExitError("Under Construction", 1)
 		}
 
 		if c.Args()[0] == "start" {
+			argsFile := Args.TemplatePath
+			var templates string
+			if argsFile == "" {
+				templates = libs.GetPCurrentPath() + "/worker.yml"
+			} else {
+				templates = argsFile
+			}
+			if !libs.CheckFile(templates) {
+				return cli.NewExitError("No Worker Register", 1)
+			}
 			concurent, _ := strconv.Atoi(Args.WorkerConcurent)
-
-			workerStart(Args.EnvPath, Args.WorkerName, uint(concurent))
+			workerStart(Args.EnvPath, Args.WorkerName, uint(concurent), templates)
 		}
 
 		return nil
@@ -51,11 +59,12 @@ func worker() cli.Command {
 
 // workerStart function
 // @envpath: string
-func workerStart(envpath, name string, concurent uint) {
+func workerStart(envpath, name string, concurent uint, template string) {
 	libs.LoadEnvirontment(envpath)
 	srv, err := InitServer()
 	libs.Check(err)
-	libs.ListTask(srv)
+	ymlData, err := libs.ReadYML(template)
+	libs.ListTask(srv, ymlData)
 	err = libs.WorkerStart(srv, name, concurent)
 	libs.Check(err)
 

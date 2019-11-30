@@ -2,11 +2,17 @@ package libs
 
 import (
 	"io"
+	"io/ioutil"
 	"os"
 	"os/user"
+	"path/filepath"
 
 	"github.com/joho/godotenv"
 	"gopkg.in/yaml.v2"
+
+	"github.com/sofyan48/duck/src/libs/scheme"
+
+	"github.com/RichardKnop/machinery/v1/log"
 )
 
 // Check Error
@@ -18,14 +24,15 @@ func Check(e error) error {
 	return e
 }
 
-// CheckFolder function check folder
+// CheckFile function check folder
 // @path : string
 // return error
-func CheckFolder(path string) error {
+func CheckFile(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		return err
+		log.ERROR.Println(err)
+		return false
 	}
-	return nil
+	return true
 }
 
 // MakeDirs fucntion create directory
@@ -172,12 +179,23 @@ func GetAllEnvirontment() map[string]string {
 
 // ReadYML read YML File
 // return map,error
-func ReadYML(path string) (map[interface{}]interface{}, error) {
-	ymlFile := ReadFile(path, 0644)
-	data := make(map[interface{}]interface{})
-	err := yaml.Unmarshal([]byte(ymlFile), &data)
+func ReadYML(path string) (scheme.RegisterTask, error) {
+	var taskRegister scheme.RegisterTask
+	ymlFile, err := ioutil.ReadFile(path)
 	if Check(err) != nil {
-		return data, err
+		return taskRegister, err
 	}
-	return data, nil
+	err = yaml.Unmarshal(ymlFile, &taskRegister)
+	if Check(err) != nil {
+		return taskRegister, err
+	}
+	return taskRegister, nil
+}
+
+// GetPCurrentPath get current path
+// return string
+func GetPCurrentPath() string {
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	Check(err)
+	return dir
 }
