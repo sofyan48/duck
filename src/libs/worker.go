@@ -5,14 +5,15 @@ import (
 )
 
 // WorkerStart Run Worker
-func WorkerStart(srv *machinery.Server) error {
-	// The second argument is a consumer tag
-	// Ideally, each worker should have a unique tag (worker1, worker2 etc)
-	worker := srv.NewWorker("machinery_worker", 0)
-
-	if err := worker.Launch(); err != nil {
+// @srv: *machinery.Server
+// @name: string
+// @concurency: uint
+// return error
+func WorkerStart(srv *machinery.Server, name string, concurency uint) error {
+	worker := srv.NewWorker(name, int(concurency))
+	err := worker.Launch()
+	if err != nil {
 		return err
 	}
-
 	return nil
 }
