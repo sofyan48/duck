@@ -8,6 +8,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/joho/godotenv v1.3.0
 	github.com/opentracing/opentracing-go v1.1.0
+	github.com/sofyan48/duck_task v0.0.0-20191130132510-76d9dcb7dd21
 	github.com/urfave/cli v1.22.2
 	google.golang.org/appengine v1.6.5
 	gopkg.in/yaml.v2 v2.2.7
