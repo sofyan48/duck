@@ -32,18 +32,23 @@ func sendTask(server *machinery.Server) error {
 	var task0 tasks.Signature
 	var initTasks = func() {
 		task0 = tasks.Signature{
-			Name: "add",
+			Name: "request",
 			Args: []tasks.Arg{
 				{
-					Type:  "int64",
-					Value: 1,
+					Type:  "string",
+					Value: "https://httpbin.org/ip",
+					Name:  "url",
 				},
 				{
-					Type:  "int64",
-					Value: 1,
+					Type:  "string",
+					Value: "OK",
+					Name:  "params",
 				},
 			},
 		}
+		// eta := time.Now().UTC().Add(time.Second * 20)
+		// task0.ETA = &eta
+		task0.IgnoreWhenTaskNotRegistered = true
 	}
 
 	// /*

@@ -9,7 +9,7 @@ import (
 func ListTask(srv *machinery.Server) {
 	// list All Data
 	tasksData := map[string]interface{}{
-		"add": tasks.Add,
+		"request": tasks.TaskRequest,
 	}
 
 	srv.RegisterTasks(tasksData)

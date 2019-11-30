@@ -36,4 +36,4 @@ go.sum
 public
 
 enabled_plugins
-machinery_tests.go
+tests.go
