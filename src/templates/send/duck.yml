@@ -1,0 +1,10 @@
+duck:
+  action:
+    url: https://httpbin.org/ip
+  params:
+    - type: string
+      name:  nama
+      value: Sofyan
+    - type: string
+			name:  alamat
+      value: Jl. Entahlah
