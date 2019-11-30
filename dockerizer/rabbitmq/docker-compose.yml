@@ -1,0 +1,15 @@
+version: '3'
+services:
+  duckRabbit:
+    image: "rabbitmq:3-management"
+    hostname: "duckRabbit"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
