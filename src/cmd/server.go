@@ -10,7 +10,7 @@ import (
 
 // InitServer call server function
 func InitServer() (*machinery.Server, error) {
-	cfg, err := configs.LoadMachineryConfig(Args.ConfigPath)
+	cfg, err := configs.LoadMachineryConfig(Args.EnvPath)
 	if err != nil {
 		os.Exit(3)
 	}

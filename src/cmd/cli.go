@@ -8,8 +8,10 @@ var app *cli.App
 
 // ArgsMapping object mapping
 type ArgsMapping struct {
-	ConfigPath   string
-	TemplatePath string
+	EnvPath         string
+	TemplatePath    string
+	WorkerName      string
+	WorkerConcurent string
 }
 
 // Args Glabal Acces args command
@@ -25,9 +27,9 @@ func Init() *cli.App {
 	app.Version = "0.0.1"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:        "environtmen, e",
-			Usage:       "Load environtmen from `FILE`",
-			Destination: &Args.ConfigPath,
+			Name:        "config, c",
+			Usage:       "Load environtment config from `FILE`",
+			Destination: &Args.EnvPath,
 		},
 	}
 	return app
@@ -38,7 +40,8 @@ func AppCommands() *cli.App {
 	app := Init()
 	app.Commands = []cli.Command{
 		createEnvi(),
-		workerStart(),
+		worker(),
+		send(),
 	}
 	return app
 }
