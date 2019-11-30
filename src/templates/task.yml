@@ -1,8 +1,7 @@
-scheduler:
-  task1:
-    name: jadwal1
-    action:
-      url: http://endpoint.com
-      ttl: 12345765
-      loop: true
-    
+worker:
+  register:
+      - action: request
+        name: tasks.Add
+      - action: request
+        name: tasks.Plus
+  
