@@ -11,19 +11,18 @@ func restServer() cli.Command {
 	command := cli.Command{}
 	command.Name = "rest"
 	command.Usage = "rest start, Starting REST API"
-	// command.Flags = []cli.Flag{
-	// 	cli.StringFlag{
-	// 		Name:        "file, f",
-	// 		Usage:       "Set Register Task From Yaml File",
-	// 		Destination: &Args.TemplatePath,
-	// 	},
-	// }
+	command.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:        "environtment, e",
+			Usage:       "Set Environtment for server",
+			Destination: &Args.TemplatePath,
+		},
+	}
 	command.Action = func(c *cli.Context) error {
 		if c.Args()[0] == "start" {
 			libs.LoadEnvirontment(Args.EnvPath)
 			server.Init()
 		}
-
 		return nil
 	}
 

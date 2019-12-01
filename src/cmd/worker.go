@@ -61,7 +61,7 @@ func worker() cli.Command {
 // @envpath: string
 func workerStart(envpath, name string, concurent uint, template string) {
 	libs.LoadEnvirontment(envpath)
-	srv, err := InitServer()
+	srv, err := libs.InitServer(envpath)
 	libs.Check(err)
 	ymlData, err := libs.ReadYML(template)
 	libs.ListTask(srv, ymlData)
