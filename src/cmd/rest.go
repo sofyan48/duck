@@ -9,8 +9,8 @@ import (
 // restServer mapping command
 func restServer() cli.Command {
 	command := cli.Command{}
-	command.Name = "rest"
-	command.Usage = "rest start, Starting REST API"
+	command.Name = "server"
+	command.Usage = "server start, Starting REST API"
 	command.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "environtment, e",
