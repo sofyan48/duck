@@ -2,9 +2,6 @@
 test:
 	@go test -v -cover -covermode=atomic ./...
 
-depend:
-	@go get github.com/meongbego/bgin
-
 build:
 	@go build -o bgin main.go
 
