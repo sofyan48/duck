@@ -90,7 +90,7 @@ func sendTask(server *machinery.Server, yamlData scheme.SendTask) error {
 	//  * First, let's try sending a single task
 	//  */
 	initTasks()
-	log.INFO.Println("Single task:")
+	log.INFO.Println("Send task:", yamlData.Duck.Task)
 	asyncResult, err := server.SendTask(&task0)
 	if err != nil {
 		return fmt.Errorf("Could not send task: %s", err.Error())
@@ -100,7 +100,7 @@ func sendTask(server *machinery.Server, yamlData scheme.SendTask) error {
 	if err != nil {
 		return fmt.Errorf("Getting task result failed with error: %s", err.Error())
 	}
-	log.INFO.Printf("1 + 1 = %v\n", results[0].Interface())
+	log.INFO.Printf("Results = %v\n", results[0].Interface())
 	return nil
 }
 
