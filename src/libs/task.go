@@ -17,7 +17,8 @@ func ListTask(srv *machinery.Server, registerTask scheme.RegisterTask) {
 	// fmt.Println(reflect.TypeOf(tasks.TaskRequest))
 
 	tasksData1 := map[string]interface{}{
-		"request": tasks.TaskRequest,
+		"request":  tasks.TaskRequest,
+		"response": tasks.TaskResponse,
 	}
 
 	srv.RegisterTasks(tasksData1)
