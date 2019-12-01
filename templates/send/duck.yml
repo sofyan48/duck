@@ -1,4 +1,5 @@
 duck:
+  task: "Send To Server"
   action:
     url: https://httpbin.org/ip
     method: POST
