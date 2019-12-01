@@ -65,6 +65,9 @@ func workerStart(envpath, name string, concurent uint, template string) {
 	libs.Check(err)
 	ymlData, err := libs.ReadYML(template)
 	libs.ListTask(srv, ymlData)
+	if name == "" {
+		name = "duck"
+	}
 	err = libs.WorkerStart(srv, name, concurent)
 	libs.Check(err)
 

@@ -1,10 +1,28 @@
 duck:
   action:
     url: https://httpbin.org/ip
-  params:
-    - type: string
-      name:  nama
-      value: Sofyan
-    - type: string
-			name:  alamat
-      value: Jl. Entahlah
+    method: POST
+    trigger: request
+  headers:
+    - name:  models
+      value: application/json
+      type: string
+    - name:  Authorization
+      value: Bearer Tokens
+      type: string
+  parameter:
+    - name:  id
+      value: 123
+      type: int
+  body:
+    - name:  is_follow
+      value: true
+      type: bool
+    - name:  is_check
+      value: true
+      type: bool
+  setting:
+    eta: 0
+    retryCount: 0
+    routingKey: "1"
+    ignoreWhenTaskNotRegistered: false
