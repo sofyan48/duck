@@ -4,13 +4,13 @@ Queue Task Schedule service
 ## Build
 Build duck
 ```
-go build src/main.go
+go build duck src/main.go
 ```
 
 or execute makefile
 
 ```
-make
+make build
 ```
 
 ## Setting environment for duck
