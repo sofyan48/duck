@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"github.com/sofyan48/duck/app/helper"
-	"github.com/sofyan48/duck/app/libs"
+	"github.com/sofyan48/duck/src/server/helper"
+	"github.com/sofyan48/duck/src/server/libs"
 )
 
 // ChekcIPRange Check ACL Addr range for ip and subneting

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	controller "github.com/sofyan48/duck/app/controller"
-	"github.com/sofyan48/duck/app/libs"
+	controller "github.com/sofyan48/duck/src/server/controller"
+	"github.com/sofyan48/duck/src/server/libs"
 )
 
 // Init Create Server

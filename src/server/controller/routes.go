@@ -2,9 +2,9 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	controller "github.com/sofyan48/duck/app/controller/api"
+	controller "github.com/sofyan48/duck/src/server/controller/api"
 
-	"github.com/sofyan48/duck/app/middlewares"
+	"github.com/sofyan48/duck/src/server/middlewares"
 )
 
 // RoutesController | Create Route Controller Rest API
