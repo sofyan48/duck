@@ -42,6 +42,7 @@ func AppCommands() *cli.App {
 		createEnvi(),
 		worker(),
 		send(),
+		restServer(),
 	}
 	return app
 }

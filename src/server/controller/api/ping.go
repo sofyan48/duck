@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sofyan48/duck/src/server/helper"
+	helper "github.com/sofyan48/duck/src/server/helper"
 )
 
 // PingController Object
