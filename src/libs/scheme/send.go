@@ -32,3 +32,16 @@ type SendTask struct {
 		} `yaml:"setting" json:"setting"`
 	} `yaml:"duck" json:"duck"`
 }
+
+// Query ...
+type Query struct {
+	Name  string `yaml:"name" json:"name"`
+	Value string `yaml:"value" json:"value"`
+	Type  string `yaml:"type" json:"type"`
+}
+
+// ResultsSend ...
+type ResultsSend struct {
+	Result interface{} `json:"result"`
+	UUID   string      `json:"uuid"`
+}

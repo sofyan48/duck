@@ -13,9 +13,6 @@ import (
 // return error
 func WorkerStart(srv *machinery.Server, name string, concurency uint) error {
 	worker := srv.NewWorker(name, int(concurency))
-
-	// Here we inject some custom code for error handling,
-	// start and end of task hooks, useful for metrics for example.
 	errorhandler := func(err error) {
 		log.ERROR.Println("I am an error handler:", err)
 	}
