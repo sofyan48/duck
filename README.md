@@ -1,11 +1,40 @@
 # DUCK
 Queue Task Schedule service
 
-## Start Worker
-Under construction
+## Build
+Build duck
 ```
-./main worker start --name=duckTest --f task_file_path
+go build src/main.go
+```
+
+or execute makefile
+
+```
+make
+```
+
+## Setting environment for duck
+Create .duck file in home user directory and see env.example for value
+
+```
+nano ~/.duck
+```
+
+
+## Start Worker
+Start Worker
+```
+./main worker start --name=duckTest --f templates/worker/task.yml
 ```
 
 ## Send Queue
-Under construction
+Send Queue
+```
+./main send -f templates/send/duck.yml
+```
+
+or create your project directory then see templates/send/duck.yml for value
+
+```
+./main send
+```
