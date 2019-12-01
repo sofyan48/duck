@@ -25,7 +25,7 @@ func LoadMachineryConfig(path string) (*config.Config, error) {
 		Broker: os.Getenv("RESULT_BACKEND"),
 		// DefaultQueue:  os.Getenv("SQS_SCHEDULER"),
 		ResultBackend:   os.Getenv("RESULT_BACKEND"),
-		ResultsExpireIn: 10,
+		ResultsExpireIn: 50,
 		// SQS: &config.SQSConfig{
 		// 	Client:            sqsClient,
 		// 	VisibilityTimeout: &visibilityTimeout,
