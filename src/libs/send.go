@@ -11,14 +11,14 @@ import (
 // Send function to queue engine
 // @enqName: string
 // @jobName: string
-func Send(enqName string, jobName string, yamlData scheme.SendTask) (scheme.SendResponse, error) {
+func Send(enqName string, jobName string, dataSchema scheme.SendTask) (scheme.SendResponse, error) {
 	result := scheme.SendResponse{}
 	redisPool := config.LoadConfig()
 	var enqueuer = work.NewEnqueuer(enqName, redisPool)
-	action, _ := json.Marshal(yamlData.Duck.Action)
-	headers, _ := json.Marshal(yamlData.Duck.Headers)
-	body, _ := json.Marshal(yamlData.Duck.Body)
-	params, _ := json.Marshal(yamlData.Duck.Params)
+	action, _ := json.Marshal(dataSchema.Duck.Action)
+	headers, _ := json.Marshal(dataSchema.Duck.Headers)
+	body, _ := json.Marshal(dataSchema.Duck.Body)
+	params, _ := json.Marshal(dataSchema.Duck.Params)
 	data, err := enqueuer.Enqueue(jobName, work.Q{
 		"action":    string(action),
 		"headers":   string(headers),
