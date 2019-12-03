@@ -38,3 +38,10 @@ or create your project directory then see templates/send/duck.yml for value
 ```
 ./main send
 ```
+
+## Get Result Queue
+Get Result Queue
+
+```
+./main get -i $UUID -f templates/send/duck.yml
+```
