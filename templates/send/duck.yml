@@ -1,18 +1,18 @@
 duck:
   task: "Send To Server GET"
   action:
-    url: https://httpbin.org/ip
+    url: https://api-eventstaging.ralali.xyz/v1/events/detail
     method: GET
     trigger: request
     worker: TEST
   headers:
     - name:  Authorization
-      value: Bearer Tokens
+      value: xxxx
       type: string
   parameter:
-    - name:  id
-      value: 123
-      type: int
+    - name:  microsite_url
+      value: event-name-2740
+      type: string
   setting:
     loop: true
     
