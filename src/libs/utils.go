@@ -29,6 +29,11 @@ func LogInfo(word string, report interface{}) {
 	log.Println(word, report)
 }
 
+// LogFatal ...
+func LogFatal(word string, report interface{}) {
+	log.Fatalln(word, report)
+}
+
 // CheckFile function check folder
 // @path : string
 // return error
