@@ -1,0 +1,17 @@
+duck:
+  task: "Send To Server GET"
+  action:
+    url: https://api-eventstaging.ralali.xyz/v1/check
+    method: GET
+    trigger: request
+    worker: TEST1
+  headers:
+    - name:  Authorization
+      value: Bearer Tokens
+      type: string
+  parameter:
+    - name:  id
+      value: 123
+      type: int
+  setting:
+    loop: true
