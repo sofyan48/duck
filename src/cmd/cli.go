@@ -12,6 +12,7 @@ type ArgsMapping struct {
 	TemplatePath    string
 	WorkerName      string
 	WorkerConcurent string
+	UUID            string
 }
 
 // Args Glabal Acces args command
@@ -43,6 +44,7 @@ func AppCommands() *cli.App {
 		worker(),
 		send(),
 		restServer(),
+		get(),
 	}
 	return app
 }

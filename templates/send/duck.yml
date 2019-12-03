@@ -15,6 +15,7 @@ duck:
       type: string
   setting:
     loop: true
+    timeResult: 10
     
 ## POST MODELS
 # duck:

@@ -2,6 +2,17 @@ package scheme
 
 import "time"
 
+// GetTask mapping
+type GetTask struct {
+	Duck struct {
+		UUID   string `yaml:"uuid" json:"uuid"`
+		Action struct {
+			Trigger string `yaml:"trigger" json:"trigger"`
+			Worker  string `yaml:"worker" json:"worker"`
+		} `yaml:"action" json:"action"`
+	} `yaml:"duck" json:"duck"`
+}
+
 // SendTask mapping send task to worker
 type SendTask struct {
 	Duck struct {
@@ -48,10 +59,12 @@ type ResultsSend struct {
 
 // SendResponse ...
 type SendResponse struct {
-	UUID      string    `json:"uuid"`
-	TaskName  string    `json:"task_name"`
-	QueueName string    `json:"queue_name"`
-	CreatedAt time.Time `json:"created_at"`
+	UUID      string      `json:"uuid"`
+	TaskName  string      `json:"task_name"`
+	QueueName string      `json:"queue_name"`
+	Args      interface{} `json:"args"`
+	Result    interface{} `json:"result"`
+	CreatedAt time.Time   `json:"created_at"`
 }
 
 // ActionScheme ...
@@ -60,4 +73,10 @@ type ActionScheme struct {
 	Method  string
 	Trigger string
 	Worker  string
+}
+
+// ActionScheme ...
+type SettingScheme struct {
+	Loop       bool
+	TimeResult int64
 }

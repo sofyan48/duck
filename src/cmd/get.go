@@ -5,15 +5,21 @@ import (
 	"github.com/urfave/cli"
 )
 
-func send() cli.Command {
+func get() cli.Command {
 	command := cli.Command{}
-	command.Name = "send"
-	command.Usage = "worker start, worker configure"
+	command.Name = "get"
+	command.Usage = "get Results"
 	command.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:        "file, f",
 			Usage:       "Set Action Sned From Yaml File",
 			Destination: &Args.TemplatePath,
+		},
+
+		cli.StringFlag{
+			Name:        "uuid, i",
+			Usage:       "Set UUID RESULT",
+			Destination: &Args.UUID,
 		},
 	}
 	command.Action = func(c *cli.Context) error {
@@ -33,15 +39,10 @@ func send() cli.Command {
 
 		//load environtment
 		libs.LoadEnvirontment(Args.EnvPath)
-		result, err := libs.Send(ymlData.Duck.Action.Worker, ymlData.Duck.Action.Trigger, ymlData)
-		if err != nil {
-			libs.LogFatal("Fatal: ", err)
+		results, _ := libs.GetResult(ymlData.Duck.Action.Worker, ymlData.Duck.Action.Trigger, Args.UUID)
+		for i, element := range results {
+			libs.LogInfo(i+" : ", element)
 		}
-		libs.LogInfo("Starting Queue : ", result.QueueName)
-		libs.LogInfo("UUID : ", result.UUID)
-		libs.LogInfo("Task : ", result.TaskName)
-		libs.LogInfo("Created : ", result.CreatedAt)
-		libs.LogInfo("Result : ", result.Result)
 		return nil
 	}
 

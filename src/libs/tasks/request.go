@@ -8,17 +8,21 @@ import (
 	"net/http"
 
 	"github.com/gocraft/work"
+	"github.com/sofyan48/duck/src/config"
 	"github.com/sofyan48/duck/src/libs/scheme"
 )
 
 // GetRequest function get request from queue
 // @job: *work.Job
 func GetRequest(job *work.Job) (string, error) {
+
 	action := &scheme.ActionScheme{}
+	setting := &scheme.SettingScheme{}
 	body := job.ArgString("body")
 	params := job.ArgString("parameter")
 	headers := job.ArgString("headers")
 	err := json.Unmarshal([]byte(job.ArgString("action")), action)
+	err = json.Unmarshal([]byte(job.ArgString("setting")), setting)
 	if err != nil {
 		log.Panic("ERROR :", err)
 		return "", err
@@ -29,7 +33,12 @@ func GetRequest(job *work.Job) (string, error) {
 	} else if action.Method == "POST" {
 		body = requestPost(action.Method, action.URL, headers, params)
 	}
-
+	keys := action.Worker + ":" + job.Name + ":" + job.ID
+	config.GetConnection()
+	_, err = config.RowsCached(keys, []byte(body), setting.TimeResult)
+	if err != nil {
+		return "", err
+	}
 	return string(body), nil
 }
 

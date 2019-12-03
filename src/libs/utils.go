@@ -31,7 +31,7 @@ func LogInfo(word string, report interface{}) {
 
 // LogFatal ...
 func LogFatal(word string, report interface{}) {
-	log.Fatalln(word, report)
+	log.Println(word, report)
 }
 
 // CheckFile function check folder
