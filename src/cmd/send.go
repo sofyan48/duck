@@ -33,7 +33,10 @@ func send() cli.Command {
 
 		//load environtment
 		libs.LoadEnvirontment(Args.EnvPath)
-		result := libs.Send(ymlData.Duck.Action.Worker, ymlData.Duck.Action.Trigger, ymlData)
+		result, err := libs.Send(ymlData.Duck.Action.Worker, ymlData.Duck.Action.Trigger, ymlData)
+		if err != nil {
+			libs.LogFatal("Fatal: ", err)
+		}
 		libs.LogInfo("Starting Queue : ", result.QueueName)
 		libs.LogInfo("UUID : ", result.UUID)
 		libs.LogInfo("Task : ", result.TaskName)
