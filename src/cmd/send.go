@@ -33,14 +33,11 @@ func send() cli.Command {
 
 		//load environtment
 		libs.LoadEnvirontment(Args.EnvPath)
-		// init server
-		srv, err := libs.InitServer(Args.EnvPath)
-		libs.Check(err)
-		// send task
-		_, err = libs.SendTask(srv, ymlData)
-		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
-		}
+		result := libs.Send(ymlData.Duck.Action.Worker, ymlData.Duck.Action.Trigger, ymlData)
+		libs.LogInfo("Starting Queue : ", result.QueueName)
+		libs.LogInfo("UUID : ", result.UUID)
+		libs.LogInfo("Task : ", result.TaskName)
+		libs.LogInfo("Created : ", result.CreatedAt)
 		return nil
 	}
 

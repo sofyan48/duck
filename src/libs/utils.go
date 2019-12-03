@@ -3,16 +3,16 @@ package libs
 import (
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/user"
 	"path/filepath"
+	"time"
 
 	"github.com/joho/godotenv"
 	"gopkg.in/yaml.v2"
 
 	"github.com/sofyan48/duck/src/libs/scheme"
-
-	"github.com/RichardKnop/machinery/v1/log"
 )
 
 // Check Error
@@ -24,12 +24,17 @@ func Check(e error) error {
 	return e
 }
 
+// LogInfo ...
+func LogInfo(word string, report interface{}) {
+	log.Println(word, report)
+}
+
 // CheckFile function check folder
 // @path : string
 // return error
 func CheckFile(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		log.ERROR.Println(err)
+		log.Println(err)
 		return false
 	}
 	return true
@@ -213,4 +218,15 @@ func GetPCurrentPath() string {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	Check(err)
 	return dir
+}
+
+// ConvertUnixTime ...
+// @unixTime: int64
+func ConvertUnixTime(unixTime int64) time.Time {
+	// i, err := strconv.ParseInt("1405544146", 10, 64)
+	// if err != nil {
+	//     panic(err)
+	// }
+	tm := time.Unix(unixTime, 0)
+	return tm
 }

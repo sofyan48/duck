@@ -2,14 +2,12 @@ package tasks
 
 import (
 	"fmt"
+
+	"github.com/gocraft/work"
 )
-// TaskResponse ...
-func TaskResponse(data ...string) (string, error) {
-	return getResponse(data), nil
-}
 
-
-func getResponse(args []string) string {
-	fmt.Println(args)
+// GetResponse function get response from any
+func GetResponse(job *work.Job) string {
+	fmt.Println(job)
 	return ""
 }

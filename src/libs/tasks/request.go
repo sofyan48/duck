@@ -4,31 +4,33 @@ import (
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 
-	"github.com/RichardKnop/machinery/v1/log"
+	"github.com/gocraft/work"
 	"github.com/sofyan48/duck/src/libs/scheme"
 )
 
-// TaskRequest ...
-func TaskRequest(data ...string) (string, error) {
-	return getRequest(data), nil
-}
-
-func getRequest(args []string) string {
-	urls := args[0]
-	methods := args[1]
-	headersQuery := args[2]
-	paramsQuery := args[3]
-	bodyQuery := args[4]
-	var body string
-	if methods == "GET" {
-		body = requestGet(methods, urls, headersQuery, paramsQuery)
-	} else if methods == "POST" {
-		body = requestPost(methods, urls, headersQuery, bodyQuery)
+// GetRequest function get request from queue
+// @job: *work.Job
+func GetRequest(job *work.Job) (string, error) {
+	action := &scheme.ActionScheme{}
+	body := job.ArgString("body")
+	params := job.ArgString("parameter")
+	headers := job.ArgString("headers")
+	err := json.Unmarshal([]byte(job.ArgString("action")), action)
+	if err != nil {
+		log.Panic("ERROR :", err)
+		return "", err
 	}
 
-	return string(body)
+	if action.Method == "GET" {
+		body = requestGet(action.Method, action.URL, headers, params)
+	} else if action.Method == "POST" {
+		body = requestPost(action.Method, action.URL, headers, params)
+	}
+
+	return string(body), nil
 }
 
 func requestGet(methods, urls, headers, query string) string {
@@ -47,11 +49,11 @@ func requestGet(methods, urls, headers, query string) string {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		log.INFO.Println("The HTTP request failed with error %s\n", err)
+		log.Println("The HTTP request failed with error", err)
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.INFO.Println("The HTTP request failed with error %s\n", err)
+		log.Println("The HTTP request failed with error ", err)
 	}
 	return string(body)
 }
@@ -62,11 +64,11 @@ func requestPost(methods, urls, headers, body string) string {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		log.INFO.Println("The HTTP request failed with error %s\n", err)
+		log.Println("The HTTP request failed with error ", err)
 	}
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.INFO.Println("The HTTP request failed with error %s\n", err)
+		log.Println("The HTTP request failed with error ", err)
 	}
 	return string(data)
 }
@@ -75,7 +77,7 @@ func parsingQuery(data string) []scheme.Query {
 	Query := []scheme.Query{}
 	err := json.Unmarshal([]byte(data), &Query)
 	if err != nil {
-		log.INFO.Println("The HTTP request failed with error %s\n", err)
+		log.Println("The HTTP request failed with error ", err)
 	}
 	return Query
 }

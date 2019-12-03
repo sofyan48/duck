@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+	"os/signal"
 	"strconv"
 
 	"github.com/sofyan48/duck/src/libs"
@@ -37,18 +39,8 @@ func worker() cli.Command {
 		}
 
 		if c.Args()[0] == "start" {
-			argsFile := Args.TemplatePath
-			var templates string
-			if argsFile == "" {
-				templates = libs.GetPCurrentPath() + "/worker.yml"
-			} else {
-				templates = argsFile
-			}
-			if !libs.CheckFile(templates) {
-				return cli.NewExitError("No Worker Register", 1)
-			}
 			concurent, _ := strconv.Atoi(Args.WorkerConcurent)
-			workerStart(Args.EnvPath, Args.WorkerName, uint(concurent), templates)
+			workerStart(Args.EnvPath, Args.WorkerName, uint(concurent))
 		}
 
 		return nil
@@ -59,16 +51,12 @@ func worker() cli.Command {
 
 // workerStart function
 // @envpath: string
-func workerStart(envpath, name string, concurent uint, template string) {
+func workerStart(envpath, name string, concurent uint) {
 	libs.LoadEnvirontment(envpath)
-	srv, err := libs.InitServer(envpath)
-	libs.Check(err)
-	ymlData, err := libs.ReadYML(template)
-	libs.ListTask(srv, ymlData)
-	if name == "" {
-		name = "duck"
-	}
-	err = libs.WorkerStart(srv, name, concurent)
-	libs.Check(err)
-
+	pool := libs.StartProcess(name, concurent)
+	pool.Start()
+	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan, os.Interrupt, os.Kill)
+	<-signalChan
+	pool.Stop()
 }
