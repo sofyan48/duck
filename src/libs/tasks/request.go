@@ -10,12 +10,7 @@ import (
 	"github.com/sofyan48/duck/src/libs/scheme"
 )
 
-// TaskRequest ...
-func TaskRequest(data ...string) (string, error) {
-	return getRequest(data), nil
-}
-
-func getRequest(args []string) string {
+func GetRequest(args []string) string {
 	urls := args[0]
 	methods := args[1]
 	headersQuery := args[2]

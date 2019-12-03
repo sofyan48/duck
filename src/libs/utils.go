@@ -1,8 +1,10 @@
 package libs
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -11,8 +13,6 @@ import (
 	"gopkg.in/yaml.v2"
 
 	"github.com/sofyan48/duck/src/libs/scheme"
-
-	"github.com/RichardKnop/machinery/v1/log"
 )
 
 // Check Error
@@ -24,12 +24,18 @@ func Check(e error) error {
 	return e
 }
 
+// LogInfo ...
+func LogInfo(report interface{}) {
+	fmt.Println("DUCK : ", report)
+	log.Println(report)
+}
+
 // CheckFile function check folder
 // @path : string
 // return error
 func CheckFile(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		log.ERROR.Println(err)
+		log.Println(err)
 		return false
 	}
 	return true

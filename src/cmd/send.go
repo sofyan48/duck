@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/sofyan48/duck/src/libs"
 	"github.com/urfave/cli"
 )
@@ -33,14 +35,7 @@ func send() cli.Command {
 
 		//load environtment
 		libs.LoadEnvirontment(Args.EnvPath)
-		// init server
-		srv, err := libs.InitServer(Args.EnvPath)
-		libs.Check(err)
-		// send task
-		_, err = libs.SendTask(srv, ymlData)
-		if err != nil {
-			return cli.NewExitError(err.Error(), 1)
-		}
+		fmt.Println(ymlData)
 		return nil
 	}
 

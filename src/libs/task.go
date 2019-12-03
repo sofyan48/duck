@@ -1,26 +1,28 @@
 package libs
 
 import (
-	"github.com/RichardKnop/machinery/v1"
-	"github.com/sofyan48/duck/src/libs/scheme"
+	"github.com/gocraft/work"
 	"github.com/sofyan48/duck/src/libs/tasks"
 )
 
+// ContextTask ...
+type ContextTask struct {
+}
+
 // ListTask list task all
-func ListTask(srv *machinery.Server, registerTask scheme.RegisterTask) {
-	// data := scheme.RegisterTask{}
-	// tasksData := make(map[string]interface{})
-	// for _, data := range registerTask.Worker.Register {
-	// 	tasksData[data.Action] = data.Name
-	// 	fmt.Println(tasksData)
-	// }
-	// fmt.Println(reflect.TypeOf(tasks.TaskRequest))
+func ListTask(pool *work.WorkerPool) {
+	pool.Job("request", (*ContextTask).TaskRequest)
+	pool.Job("response", (*ContextTask).TaskResponse)
+}
 
-	tasksData1 := map[string]interface{}{
-		"request":  tasks.TaskRequest,
-		"response": tasks.TaskResponse,
-	}
+// TaskRequest ...
+func (ctx *ContextTask) TaskRequest(job *work.Job) error {
+	tasks.GetResponse(job.Args)
+	return nil
+}
 
-	srv.RegisterTasks(tasksData1)
-
+// TaskResponse ...
+func (ctx *ContextTask) TaskResponse(job *work.Job) error {
+	// return tasks.GetResponse(string(job.Args)), nil
+	return nil
 }

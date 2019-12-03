@@ -12,11 +12,8 @@ duck:
     - name:  id
       value: 123
       type: int
-  setting:
-    eta: 0
-    retryCount: 0
-    routingKey: "1"
-    ignoreWhenTaskNotRegistered: false
+  signature:
+    
 ## POST MODELS
 # duck:
 #   task: "Send To Server POST"
