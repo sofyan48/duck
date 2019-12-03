@@ -1,5 +1,7 @@
 package scheme
 
+import "time"
+
 // SendTask mapping send task to worker
 type SendTask struct {
 	Duck struct {
@@ -8,6 +10,7 @@ type SendTask struct {
 			URL     string `yaml:"url" json:"url"`
 			Method  string `yaml:"method" json:"method"`
 			Trigger string `yaml:"trigger" json:"trigger"`
+			Worker  string `yaml:"worker" json:"worker"`
 		} `yaml:"action" json:"action"`
 		Headers []struct {
 			Name  string `yaml:"name" json:"name"`
@@ -25,10 +28,7 @@ type SendTask struct {
 			Type  string `yaml:"type" json:"type"`
 		} `yaml:"body" json:"body"`
 		Setting struct {
-			ETA                         int    `yaml:"eta" json:"eta"`
-			RetryCount                  int    `yaml:"retryCount" json:"retryCount"`
-			RoutingKey                  string `yaml:"routingKey" json:"routingKey"`
-			IgnoreWhenTaskNotRegistered bool   `yaml:"ignoreWhenTaskNotRegistered" json:"ignoreWhenTaskNotRegistered"`
+			Loop bool `yaml:"loop" json:"loop"`
 		} `yaml:"setting" json:"setting"`
 	} `yaml:"duck" json:"duck"`
 }
@@ -44,4 +44,20 @@ type Query struct {
 type ResultsSend struct {
 	Result interface{} `json:"result"`
 	UUID   string      `json:"uuid"`
+}
+
+// SendResponse ...
+type SendResponse struct {
+	UUID      string    `json:"uuid"`
+	TaskName  string    `json:"task_name"`
+	QueueName string    `json:"queue_name"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+// ActionScheme ...
+type ActionScheme struct {
+	URL     string
+	Method  string
+	Trigger string
+	Worker  string
 }

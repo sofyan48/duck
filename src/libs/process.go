@@ -1,8 +1,6 @@
 package libs
 
 import (
-	"fmt"
-
 	"github.com/gocraft/work"
 	"github.com/sofyan48/duck/src/config"
 )
@@ -18,7 +16,6 @@ func StartProcess(processName string, concurency uint) *work.WorkerPool {
 
 // Log middleware for log job task
 func (ctx *ContextTask) Log(job *work.Job, next work.NextMiddlewareFunc) error {
-	LogInfo(job.Name)
-	fmt.Println("Starting job: ", job.Name)
+	LogInfo("Starting Job: ", job.Name)
 	return next()
 }

@@ -1,6 +1,8 @@
 package libs
 
 import (
+	"fmt"
+
 	"github.com/gocraft/work"
 	"github.com/sofyan48/duck/src/libs/tasks"
 )
@@ -17,7 +19,11 @@ func ListTask(pool *work.WorkerPool) {
 
 // TaskRequest ...
 func (ctx *ContextTask) TaskRequest(job *work.Job) error {
-	tasks.GetResponse(job.Args)
+	results, err := tasks.GetRequest(job)
+	if err != nil {
+		return err
+	}
+	fmt.Println(results)
 	return nil
 }
 

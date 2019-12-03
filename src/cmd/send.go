@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/sofyan48/duck/src/libs"
 	"github.com/urfave/cli"
 )
@@ -35,7 +33,11 @@ func send() cli.Command {
 
 		//load environtment
 		libs.LoadEnvirontment(Args.EnvPath)
-		fmt.Println(ymlData)
+		result := libs.Send(ymlData.Duck.Action.Worker, ymlData.Duck.Action.Trigger, ymlData)
+		libs.LogInfo("Starting Queue : ", result.QueueName)
+		libs.LogInfo("UUID : ", result.UUID)
+		libs.LogInfo("Task : ", result.TaskName)
+		libs.LogInfo("Created : ", result.CreatedAt)
 		return nil
 	}
 

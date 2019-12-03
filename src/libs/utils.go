@@ -1,13 +1,13 @@
 package libs
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"os/user"
 	"path/filepath"
+	"time"
 
 	"github.com/joho/godotenv"
 	"gopkg.in/yaml.v2"
@@ -25,9 +25,8 @@ func Check(e error) error {
 }
 
 // LogInfo ...
-func LogInfo(report interface{}) {
-	fmt.Println("DUCK : ", report)
-	log.Println(report)
+func LogInfo(word string, report interface{}) {
+	log.Println(word, report)
 }
 
 // CheckFile function check folder
@@ -219,4 +218,15 @@ func GetPCurrentPath() string {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	Check(err)
 	return dir
+}
+
+// ConvertUnixTime ...
+// @unixTime: int64
+func ConvertUnixTime(unixTime int64) time.Time {
+	// i, err := strconv.ParseInt("1405544146", 10, 64)
+	// if err != nil {
+	//     panic(err)
+	// }
+	tm := time.Unix(unixTime, 0)
+	return tm
 }
