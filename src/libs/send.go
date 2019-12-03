@@ -11,7 +11,7 @@ import (
 // Send function to queue engine
 // @enqName: string
 // @jobName: string
-func Send(enqName string, jobName string, yamlData scheme.SendTask) scheme.SendResponse {
+func Send(enqName string, jobName string, yamlData scheme.SendTask) (scheme.SendResponse, error) {
 	result := scheme.SendResponse{}
 	redisPool := config.LoadConfig()
 	var enqueuer = work.NewEnqueuer(enqName, redisPool)
@@ -25,10 +25,13 @@ func Send(enqName string, jobName string, yamlData scheme.SendTask) scheme.SendR
 		"parameter": string(params),
 		"body":      string(body),
 	})
-	Check(err)
+	if err != nil {
+		Check(err)
+		return result, err
+	}
 	result.UUID = data.ID
 	result.TaskName = data.Name
 	result.QueueName = enqName
 	result.CreatedAt = ConvertUnixTime(data.EnqueuedAt)
-	return result
+	return result, nil
 }
