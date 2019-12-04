@@ -26,8 +26,8 @@ Start Worker
 ```
 ./main worker start --name=duckTest --f templates/worker/task.yml
 ```
-
-## Send Queue
+## Queue CLI Mode
+### Send Queue
 Send Queue
 ```
 ./main send -f templates/send/duck.yml
@@ -39,9 +39,65 @@ or create your project directory then see templates/send/duck.yml for value
 ./main send
 ```
 
-## Get Result Queue
+### Get Result Queue CLI MODE
 Get Result Queue
 
 ```
 ./main get -i $UUID -f templates/send/duck.yml
+```
+
+## Queue REST Mode
+### Starting Server
+```
+./main server start
+```
+
+### Send Queue
+```
+curl -X POST \
+  http://localhost:5000/api/send/task \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: f1c76cdf-202c-4a37-968a-b9589f504d9c' \
+  -H 'cache-control: no-cache' \
+  -d '{
+  "duck": {
+    "task": "Send To Server GET",
+    "action": {
+      "url": "$URL", ## URL DEFINE
+      "method": "GET",
+      "trigger": "request",
+      "worker": "$WORKER" ## WORKER NAME
+    },
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "xxxx",
+        "type": "string"
+      }
+    ],
+    "parameter": [
+      {
+        "name": "microsite_url",
+        "value": "event-name-2740",
+        "type": "string"
+      }
+    ],
+    "setting": {
+      "loop": true
+    }
+  }
+}'
+```
+
+### Get Result
+```
+{
+    "duck": {
+        "uuid" : "c9ab13c9410251c4c0f83d9b",
+        "action": {
+            "trigger": "request",
+            "worker": "TEST1"
+        }
+    }   
+}
 ```
