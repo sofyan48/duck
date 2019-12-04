@@ -57,7 +57,6 @@ Get Result Queue
 curl -X POST \
   http://localhost:5000/api/send/task \
   -H 'Content-Type: application/json' \
-  -H 'Postman-Token: f1c76cdf-202c-4a37-968a-b9589f504d9c' \
   -H 'cache-control: no-cache' \
   -d '{
   "duck": {
@@ -93,7 +92,7 @@ curl -X POST \
 ```
 {
     "duck": {
-        "uuid" : "c9ab13c9410251c4c0f83d9b",
+        "uuid" : "$UUID", ## CHECK UUID AFTER SEND QUEUE
         "action": {
             "trigger": "request",
             "worker": "TEST1"
