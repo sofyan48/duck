@@ -90,13 +90,17 @@ curl -X POST \
 
 ### Get Result
 ```
-{
-    "duck": {
-        "uuid" : "$UUID", ## CHECK UUID AFTER SEND QUEUE
-        "action": {
-            "trigger": "request",
-            "worker": "TEST1"
-        }
-    }   
-}
+curl -X POST \
+  http://localhost:5000/api/get/task \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{
+	  "duck": {
+	  	"uuid" : "c9ab13c9410251c4c0f83d9b",
+	    "action": {
+	      "trigger": "request",
+	      "worker": "TEST1"
+	    }
+	}
+}'
 ```
