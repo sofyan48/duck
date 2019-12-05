@@ -1,5 +1,5 @@
 package tasks
 
-// DefaultTasks types
-type DefaultTasks struct {
+// Tasks types
+type Tasks struct {
 }

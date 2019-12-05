@@ -9,13 +9,17 @@ import (
 
 	"github.com/gocraft/work"
 	"github.com/sofyan48/duck/src/config"
+	"github.com/sofyan48/duck/src/libs/redis"
 	"github.com/sofyan48/duck/src/libs/scheme"
 )
 
 // GetRequest function get request from queue
 // @job: *work.Job
 func GetRequest(job *work.Job) (string, error) {
-
+	cnf := config.Config{}
+	dial, _ := cnf.LoadBroker(2)
+	store := dial.RedisDial
+	rds := redis.Redis{}
 	action := &scheme.ActionScheme{}
 	setting := &scheme.SettingScheme{}
 	body := job.ArgString("body")
@@ -34,8 +38,8 @@ func GetRequest(job *work.Job) (string, error) {
 		body = requestPost(action.Method, action.URL, headers, params)
 	}
 	keys := action.Worker + ":" + job.Name + ":" + job.ID
-	config.GetConnection()
-	_, err = config.RowsCached(keys, []byte(body), setting.TimeResult)
+	// _, err = config.RedisStore(keys, []byte(body), setting.TimeResult)
+	_, err = rds.RowsCached(store, keys, []byte(body), setting.TimeResult)
 	if err != nil {
 		return "", err
 	}

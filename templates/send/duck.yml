@@ -4,7 +4,7 @@ duck:
     url: https://api-eventstaging.ralali.xyz/v1/events/detail
     method: GET
     trigger: request
-    worker: TEST
+    worker: TEST1
   headers:
     - name:  Authorization
       value: xxxx
