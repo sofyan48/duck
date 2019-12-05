@@ -63,7 +63,6 @@ type SendResponse struct {
 	TaskName  string      `json:"task_name"`
 	QueueName string      `json:"queue_name"`
 	Args      interface{} `json:"args"`
-	Result    interface{} `json:"result"`
 	CreatedAt time.Time   `json:"created_at"`
 }
 

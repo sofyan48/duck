@@ -2,7 +2,6 @@ package libs
 
 import (
 	"encoding/json"
-
 	"github.com/gocraft/work"
 	"github.com/sofyan48/duck/src/config"
 	"github.com/sofyan48/duck/src/libs/scheme"
@@ -12,7 +11,6 @@ import (
 // @enqName: string
 // @jobName: string
 func Send(enqName string, jobName string, dataSchema scheme.SendTask) (scheme.SendResponse, error) {
-	config.GetConnection()
 	result := scheme.SendResponse{}
 	redisPool := config.LoadConfig()
 	var enqueuer = work.NewEnqueuer(enqName, redisPool)

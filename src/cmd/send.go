@@ -41,7 +41,6 @@ func send() cli.Command {
 		libs.LogInfo("UUID : ", result.UUID)
 		libs.LogInfo("Task : ", result.TaskName)
 		libs.LogInfo("Created : ", result.CreatedAt)
-		libs.LogInfo("Result : ", result.Result)
 		return nil
 	}
 

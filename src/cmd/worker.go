@@ -16,20 +16,14 @@ func worker() cli.Command {
 	command.Usage = "worker start, worker configure"
 	command.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:        "file, f",
-			Usage:       "Set Register Task From Yaml File",
-			Destination: &Args.TemplatePath,
-		},
-
-		cli.StringFlag{
 			Name:        "name",
 			Usage:       "Set Worker Name",
 			Destination: &Args.WorkerName,
 		},
 
 		cli.StringFlag{
-			Name:        "concurent",
-			Usage:       "Set Worker Concurent",
+			Name:        "concurrent",
+			Usage:       "Set Worker Concurrent",
 			Destination: &Args.WorkerConcurent,
 		},
 	}
@@ -40,7 +34,13 @@ func worker() cli.Command {
 
 		if c.Args()[0] == "start" {
 			concurent, _ := strconv.Atoi(Args.WorkerConcurent)
+			if concurent == 0 {
+				concurent = 1
+				libs.LogInfo("Load Default Concurent", 1)
+			}
+			libs.LogInfo("Starting Worker", "")
 			workerStart(Args.EnvPath, Args.WorkerName, uint(concurent))
+			libs.LogInfo("Stoped Worker", "")
 		}
 
 		return nil

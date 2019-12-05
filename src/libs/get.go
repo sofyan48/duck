@@ -4,13 +4,17 @@ import (
 	"encoding/json"
 
 	"github.com/sofyan48/duck/src/config"
+	"github.com/sofyan48/duck/src/libs/redis"
 )
 
 // GetResult get reslut from jobs
 func GetResult(worker, jobsName, uuid string) (map[string]interface{}, error) {
-	config.GetConnection()
+	cnf := config.Config{}
+	dial, _ := cnf.LoadBroker(2)
+	store := dial.RedisDial
+	rds := redis.Redis{}
 	keys := worker + ":" + jobsName + ":" + uuid
-	resultRequest, err := config.GetRowsCached(keys)
+	resultRequest, err := rds.GetRowsCached(store, keys)
 	if err != nil {
 		LogFatal("Error : ", err)
 		return nil, err

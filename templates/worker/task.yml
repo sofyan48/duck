@@ -1,8 +1,0 @@
-worker:
-  name: duck
-  register:
-    - action: request
-      name: tasks.Add
-    - action: request
-      name: tasks.Plus
-  

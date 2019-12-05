@@ -1,6 +1,7 @@
 package libs
 
 import (
+	"encoding/json"
 	"io"
 	"io/ioutil"
 	"log"
@@ -228,10 +229,19 @@ func GetPCurrentPath() string {
 // ConvertUnixTime ...
 // @unixTime: int64
 func ConvertUnixTime(unixTime int64) time.Time {
-	// i, err := strconv.ParseInt("1405544146", 10, 64)
-	// if err != nil {
-	//     panic(err)
-	// }
 	tm := time.Unix(unixTime, 0)
 	return tm
+}
+
+// ParseJSON function conver json string to object
+// @data: string
+// return map[string]interface{}, error
+func ParseJSON(data string) (map[string]interface{}, error) {
+	result := make(map[string]interface{})
+	err := json.Unmarshal([]byte(data), &result)
+	if err != nil {
+		Check(err)
+		return nil, err
+	}
+	return result, nil
 }
