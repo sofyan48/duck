@@ -1,24 +1,26 @@
-package config
+package redis
 
 import (
 	"fmt"
-	"os"
 
-	"github.com/garyburd/redigo/redis"
+	"github.com/gomodule/redigo/redis"
 )
 
 // Store variabels
 var Store redis.Conn
 
+// Redis type
+type Redis struct {
+}
+
 // InitRedis func
 // return: redis.Conn
-func InitRedis() (redis.Conn, error) {
-
-	connRedis, err := redis.Dial("tcp", os.Getenv("RESULT_BACKEND"))
+func InitRedis(conn string) (redis.Conn, error) {
+	connRedis, err := redis.Dial("tcp", conn)
 	if err != nil {
 		fmt.Println(fmt.Sprintf("failed to connect to redis from environment: %v", err))
 		fmt.Println("Trying Local Connection")
-		connRedis, err := redis.Dial("tcp", os.Getenv("RESULT_BACKEND"))
+		connRedis, err := redis.Dial("tcp", conn)
 		return connRedis, err
 	}
 	return connRedis, nil
@@ -26,9 +28,9 @@ func InitRedis() (redis.Conn, error) {
 
 // GetConnection function
 // return store
-func GetConnection() redis.Conn {
+func GetConnection(host string) redis.Conn {
 	if Store == nil {
-		Store, _ = InitRedis()
+		Store, _ = InitRedis(host)
 	}
 	return Store
 }
@@ -38,8 +40,8 @@ func GetConnection() redis.Conn {
 // @data: []byte
 // @ttl: int
 // return []byte, error
-func RowsCached(keys string, data []byte, ttl int64) ([]byte, error) {
-	_, err := redis.String(Store.Do("SET", keys, data))
+func (rd *Redis) RowsCached(store redis.Conn, keys string, data []byte, ttl int64) ([]byte, error) {
+	_, err := redis.String(store.Do("SET", keys, data))
 	if err != nil {
 		return nil, err
 	}
@@ -51,8 +53,8 @@ func RowsCached(keys string, data []byte, ttl int64) ([]byte, error) {
 // GetRowsCached params
 // @keys: string
 // return string, error
-func GetRowsCached(keys string) (string, error) {
-	value, err := redis.String(Store.Do("GET", keys))
+func (rd *Redis) GetRowsCached(store redis.Conn,keys string) (string, error) {
+	value, err := redis.String(store.Do("GET", keys))
 	if err != nil {
 		return "", err
 	}
